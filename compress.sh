@@ -1,3 +1,16 @@
+#!/bin/bash	
+
+# Author Github:   https://github.com/g666gle	
+# Author Twitter:  https://twitter.com/g666g1e	
+# Date: 12/1/2019	
+# Usage: ./compress.sh	
+# Usage: ./compress.sh /home/user/full/path/to/folder	
+# Description:	This script takes in no parameters, checks to make sure that the	
+#		user is in the correct directory and compresses every top	
+#		level directory using Facebook's zstd standard. Giving each file	
+#		a .zst extension. Compression data is printed to the user.	
+
+
 RED='\033[0;31m'
 YELLOW='\033[1;33m'
 NC='\033[0m'  # No Color
