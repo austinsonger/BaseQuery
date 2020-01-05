@@ -1,16 +1,3 @@
-#!/bin/bash
-
-# Author Github:   https://github.com/g666gle
-# Author Twitter:  https://twitter.com/g666g1e
-# Date: 12/1/2019
-# Usage: ./Import
-# Usage: ./Import <Full path to export data to> (imports from normal ./PutYourDatabasesHere/)
-# Description:	Import.sh first checks to make sure the user is in the correct directory.
-#		Then, every file in the data directory will have their hash compared to the
-#		log file keeping track of all of the databases previously imported. If the 
-#		database has not been previously imported, the data is decompressed and the 
-#		folder is primed, lastly the pysort.py file is called. 
-
 RED='\033[0;31m'
 YELLOW='\033[1;33m'
 GREEN='\033[0;32m'
@@ -32,14 +19,14 @@ if [ "${PWD##*/}" == "BaseQuery" ];then
 			arr=(${inputfile})
 			file_SHA_sum="$(sha256sum "$dataDir"/PutYourDataBasesHere/"$inputfile" | awk '{print$1}')"
 			#  check to see if the database has already been imported
-			if [ "$(rg $file_SHA_sum -c ./Logs/importedDBS.log)" == "" ];then
+			if [ "$(rg "$file_SHA_sum" -c ./Logs/importedDBS.log)" == "" ];then
 				let i=i+1
 			fi
 			_constr+="${arr[2]}"
 		done< <(find PutYourDataBasesHere -type f -exec echo {} \; | cut -f 2- -d "/")
 
 		# if there are files that need to be imported
-		if [ $i -ne 0 ];then
+		if [ "$i" -ne 0 ];then
 			#  decompress all of the folders before priming and import
 			printf "${YELLOW}[!]${NC} Decompressing all stored data\n"
 			printf "[!] Decompressing all stored data\n" >> ./Logs/ActivityLogs.log
@@ -78,7 +65,7 @@ if [ "${PWD##*/}" == "BaseQuery" ];then
 			find PutYourDataBasesHere -type f -exec echo {} \; | cut -f 2- -d "/" | while read -r inputfile;do
 				file_SHA_sum="$(sha256sum "$dataDir"/PutYourDataBasesHere/"$inputfile" | awk '{print$1}')"
 				#  check to see if the database has already been imported
-				if [ "$(rg $file_SHA_sum -c ./Logs/importedDBS.log)" == "" ];then
+				if [ "$(rg "$file_SHA_sum" -c ./Logs/importedDBS.log)" == "" ];then
 
 					if [ $# -eq 1 ];then
 						#  Import files from PutYourDataBasesHere and export somewhere else
@@ -136,7 +123,3 @@ fi
 echo
 printf "${RED}[*]${NC} Completed\n"
 printf "[*] Completed\n" >> ./Logs/ActivityLogs.log
-
-
-
-
