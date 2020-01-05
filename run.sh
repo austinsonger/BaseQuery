@@ -225,7 +225,7 @@ if [ "${PWD##*/}" == "BaseQuery" ];then
 				#  Compress all of the data
 				echo 
 				printf "${YELLOW}[!]${NC} Compressing all stored data\n"
-				./compress.sh $data_dir
+				./compress.sh "$data_dir"
 				printf "${GREEN}[+]${NC} Finished compressing!\n"
 				echo
 				
@@ -248,7 +248,7 @@ if [ "${PWD##*/}" == "BaseQuery" ];then
 				    	read -p "Option Number (1-6 or Q)-> " hunter_search
 				    done
 				    #  Domain Search
-				    if [ $hunter_search -eq 1 ];then
+				    if [ "$hunter_search" -eq 1 ];then
 
 				    	read -p "Would you like to output the results to a file? [Y/N] " out_to_file
 				    	while [[ $out_to_file != [YyNn] ]];do
@@ -322,7 +322,7 @@ if [ "${PWD##*/}" == "BaseQuery" ];then
 				    	fi
 
 				    #  Email Finder
-				    elif [ $hunter_search -eq 2 ];then
+				    elif [ "$hunter_search" -eq 2 ];then
 
 				    	#  Asking for the Domain name ex) google.com
 				    	printf "[MUST BE DEFINED IF 'Company' IS NOT! Enter for None]${GREEN} Domain${NC}: "
@@ -396,7 +396,7 @@ if [ "${PWD##*/}" == "BaseQuery" ];then
 				    	python3.7 hunter_io_API_calls.py -ef True --domain="$domain" --company="$company" --first_name="$first_name" --last_name="$last_name" --full_name="$full_name"
 
 				    #  Email Verifier
-				    elif [ $hunter_search -eq 3 ];then
+				    elif [ "$hunter_search" -eq 3 ];then
 				    	printf "${GREEN}Email Address${NC}: "
 	    				read -p "" email
 					    while [[ $email == "" ]];do
@@ -406,7 +406,7 @@ if [ "${PWD##*/}" == "BaseQuery" ];then
 				    	python3.7 hunter_io_API_calls.py -ev True  --email="$email"
 
 				    #  Email Count
-				    elif [ $hunter_search -eq 4 ];then
+				    elif [ "$hunter_search" -eq 4 ];then
 				    	#  Asking for the Domain name ex) google.com
 				    	printf "[MUST BE DEFINED IF 'Company' IS NOT! Enter for None]${GREEN} Domain${NC}: "
 	    				read -p "" domain
@@ -438,11 +438,11 @@ if [ "${PWD##*/}" == "BaseQuery" ];then
 					    python3.7 hunter_io_API_calls.py -ec True  --domain="$domain" --company="$company"
 
 				    #  Account Information
-				    elif [ $hunter_search -eq 5 ];then
+				    elif [ "$hunter_search" -eq 5 ];then
 					    python3.7 hunter_io_API_calls.py -ai True
 
 				    #  Help
-				    elif [ $hunter_search -eq 6 ];then
+				    elif [ "$hunter_search" -eq 6 ];then
 				    	python3.7 hunter_io_API_calls.py --help
 				    fi
 				    #  Wait to clear the screen until the user hits enter
