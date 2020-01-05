@@ -1,15 +1,3 @@
-#!/bin/bash
-
-# Author Github:   https://github.com/g666gle
-# Author Twitter:  https://twitter.com/g666g1e
-# Date: 12/1/2019
-# Usage: ./compress.sh
-# Usage: ./compress.sh /home/user/full/path/to/folder
-# Description:	This script takes in no parameters, checks to make sure that the
-#		user is in the correct directory and compresses every top
-#		level directory using Facebook's zstd standard. Giving each file
-#		a .zst extension. Compression data is printed to the user.
-
 RED='\033[0;31m'
 YELLOW='\033[1;33m'
 NC='\033[0m'  # No Color
@@ -26,7 +14,7 @@ if [ "${PWD##*/}" == "BaseQuery" ];then
 			if [ "$uncompressed_dir" != "data/" ];then
 				file_bytes=$(du -sb "$uncompressed_dir"/ | cut -f 1)
 				let orig_bytes=$orig_bytes+$file_bytes
-				name="$(echo $uncompressed_dir | cut -f 2- -d "/")"
+				name="$(echo "$uncompressed_dir" | cut -f 2- -d "/")"
 				#tar --use-compress-program=zstd -cf data/0.tar.zst data/0
 				tar --use-compress-program=zstd -cf data/"$name".tar.zst "$uncompressed_dir" && rm -rf "$uncompressed_dir"
 			fi
@@ -35,7 +23,7 @@ if [ "${PWD##*/}" == "BaseQuery" ];then
 
 		compressed_bytes=$(du -sb data/ | cut -f 1)
 		if [[ $orig_bytes -ne 0 && $compressed_bytes -ne 0 ]];then
-			comp_div_ori=$( awk -v orig=$orig_bytes -v comp=$compressed_bytes 'BEGIN{printf("%.2f\n",comp/orig*100)}' )
+			comp_div_ori=$( awk -v orig="$orig_bytes" -v comp="$compressed_bytes" 'BEGIN{printf("%.2f\n",comp/orig*100)}' )
 			multiples_compressed=$(( $orig_bytes/$compressed_bytes ))
 			echo 
 			printf "${RED}[*] Your data is $multiples_compressed""x times smaller! (~$comp_div_ori%% of the original size)${NC}\n"
@@ -57,7 +45,7 @@ if [ "${PWD##*/}" == "BaseQuery" ];then
 			file_bytes=$(du -sb "$uncompressed_dir"/ | cut -f 1)
 			let orig_bytes=$orig_bytes+$file_bytes
 			#  Grabs just the letter of the dir ex) a
-			name="$(echo $uncompressed_dir | rev | cut -f 1 -d '/' | rev)"
+			name="$(echo "$uncompressed_dir" | rev | cut -f 1 -d '/' | rev)"
 
 			#cut_away_letter_dir=${uncompressed_dir%/*}
 			#grab_last_dir="$(echo $cut_away_letter_dir | rev | cut -d '/' -f 1 | rev)"
@@ -72,17 +60,17 @@ if [ "${PWD##*/}" == "BaseQuery" ];then
 
 			#echo "tar --use-compress-program=zstd -cvf $1/$name.tar.zst -C $1 $name"
 			#exit
-			if [ ! -f $1/$name.tar.zst ]; then
-				touch $1/$name.tar.zst
+			if [ ! -f "$1"/"$name".tar.zst ]; then
+				touch "$1"/"$name".tar.zst
 			fi
-			tar --use-compress-program=zstd -cf $1/$name.tar.zst -C $1 $name && rm -rf $uncompressed_dir
+			tar --use-compress-program=zstd -cf "$1"/"$name".tar.zst -C "$1" "$name" && rm -rf "$uncompressed_dir"
 			#exit
 			_constr+="${arr[2]}"	
 		done< <(find "$1" -maxdepth 1 -type d | sort | tail -n +2)
 
 		compressed_bytes=$(du -sb "$1" | cut -f 1)
 		if [[ $orig_bytes -ne 0 && $compressed_bytes -ne 0 ]];then
-			comp_div_ori=$( awk -v orig=$orig_bytes -v comp=$compressed_bytes 'BEGIN{printf("%.2f\n",comp/orig*100)}' )
+			comp_div_ori=$( awk -v orig="$orig_bytes" -v comp="$compressed_bytes" 'BEGIN{printf("%.2f\n",comp/orig*100)}' )
 			multiples_compressed=$(( $orig_bytes/$compressed_bytes ))
 			echo 
 			printf "${RED}[*] Your data is $multiples_compressed""x times smaller! (~$comp_div_ori%% of the original size)${NC}\n"
@@ -104,4 +92,3 @@ else
 	printf "ERROR: Please change directories to the BaseQuery root directory\n" >> ./Logs/ActivityLogs.log
 fi
 	
-
