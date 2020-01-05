@@ -1,3 +1,16 @@
+#!/bin/bash	
+
+# Author Github:   https://github.com/g666gle	
+# Author Twitter:  https://twitter.com/g666g1e	
+# Date: 12/1/2019	
+# Usage: ./Import	
+# Usage: ./Import <Full path to export data to> (imports from normal ./PutYourDatabasesHere/)	
+# Description:	Import.sh first checks to make sure the user is in the correct directory.	
+#		Then, every file in the data directory will have their hash compared to the	
+#		log file keeping track of all of the databases previously imported. If the 	
+#		database has not been previously imported, the data is decompressed and the 	
+#		folder is primed, lastly the pysort.py file is called. 
+
 RED='\033[0;31m'
 YELLOW='\033[1;33m'
 GREEN='\033[0;32m'
