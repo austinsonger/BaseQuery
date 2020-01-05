@@ -39,8 +39,8 @@ if [ $# -eq 1 ];then
 			./search_rg.sh "$1"
 		else
 			# A file was given
-			filename="$(echo $1 | rev | cut -f 1 -d "/" | rev)" #test.txt
-			printf "${GREEN}[+]${NC} Outputting all results to ${GREEN}./OutputFiles/""$(echo $filename | cut -f 1 -d "." )""_output.txt${NC}\n"
+			filename="$(echo "$1" | rev | cut -f 1 -d "/" | rev)" #test.txt
+			printf "${GREEN}[+]${NC} Outputting all results to ${GREEN}./OutputFiles/""$(echo "$filename" | cut -f 1 -d "." )""_output.txt${NC}\n"
 			cat "$1" | while read -r email;do
 				#  The first param is the email address the second is telling ./search that it 
 				#  is a file so the user is not prompted
@@ -65,8 +65,8 @@ if [ $# -eq 2 ];then
 			./search_rg_external.sh "$1" "$2"
 		else
 			# A file was given
-			filename="$(echo $1 | rev | cut -f 1 -d "/" | rev)" #test.txt
-			printf "${GREEN}[+]${NC} Outputting all results to ${GREEN}./OutputFiles/""$(echo $filename | cut -f 1 -d "." )""_output.txt${NC}\n"
+			filename="$(echo "$1" | rev | cut -f 1 -d "/" | rev)" #test.txt
+			printf "${GREEN}[+]${NC} Outputting all results to ${GREEN}./OutputFiles/""$(echo "$filename" | cut -f 1 -d "." )""_output.txt${NC}\n"
 			cat "$1" | while read -r email;do
 				#  The first param is the email address the second is telling ./search that it 
 				#  is a file so the user is not prompted
