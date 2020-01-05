@@ -1,3 +1,17 @@
+#!/bin/bash	
+
+# Author Github:   https://github.com/g666gle	
+# Author Twitter:  https://twitter.com/g666g1e	
+# Date: 12/1/2019	
+# Usage: ./search_rg.sh test@example.com <optional filename>	
+# Usage: ./search_rg.sh test@ <optional filename>	
+# Usage: ./search_rg.sh @example.com <optional filename>	
+# Description:	search_rg.sh handles all of the logic for the searching algorithm. If a 	
+#				filename is provided the results will be put in a file in the OutputFiles	
+#				directory instead of written to stdout.	
+
+
+
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
