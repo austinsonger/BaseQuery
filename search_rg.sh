@@ -1,16 +1,3 @@
-#!/bin/bash
-
-# Author Github:   https://github.com/g666gle
-# Author Twitter:  https://twitter.com/g666g1e
-# Date: 12/1/2019
-# Usage: ./search_rg.sh test@example.com <optional filename>
-# Usage: ./search_rg.sh test@ <optional filename>
-# Usage: ./search_rg.sh @example.com <optional filename>
-# Description:	search_rg.sh handles all of the logic for the searching algorithm. If a 
-#				filename is provided the results will be put in a file in the OutputFiles
-#				directory instead of written to stdout.
-
-
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
@@ -181,8 +168,8 @@ if [ "${PWD##*/}" == "BaseQuery" ];then
 					if [ -e ./data/"$first_char"/"$second_char"/"$third_char"/"$fourth_char".txt ];then
 						#  Open the file and search for the email address then only keep the passwords, iterate through the passwords and echo then
 						rg -iN --no-filename --no-heading --color never "^$email" ./data/"$first_char"/"$second_char"/"$third_char"/"$fourth_char".txt | while read -r Line;do
-							user_name="$(echo $Line | cut -f 1 -d ':')"
-							Password="$(echo $Line | cut -f 2- -d ':')"
+							user_name="$(echo "$Line" | cut -f 1 -d ':')"
+							Password="$(echo "$Line" | cut -f 2- -d ':')"
 							# check if the user wants the output to a file
 							if [[ "$out_to_file" == [Yy] ]];then 
 								echo  "$Line" >> ./OutputFiles/"$1"_output.txt
@@ -196,8 +183,8 @@ if [ "${PWD##*/}" == "BaseQuery" ];then
 						#  Check to see if the email is in the NOT VALID file
 						if [[ -d ./data/NOTVALID && -e ./data/NOTVALID/FAILED_TEST.txt ]];then
 							rg -iN --no-filename --no-heading --color never "^$email" ./data/NOTVALID/FAILED_TEST.txt | while read -r Line;do
-								user_name="$(echo $Line | cut -f 1 -d ':')"
-								Password="$(echo $Line | cut -f 2- -d ':')"
+								user_name="$(echo "$Line" | cut -f 1 -d ':')"
+								Password="$(echo "$Line" | cut -f 2- -d ':')"
 								# check if the user wants the output to a file
 								if [[ "$out_to_file" == [Yy] ]];then 
 									echo  "$Line" >> ./OutputFiles/"$1"_output.txt
@@ -213,8 +200,8 @@ if [ "${PWD##*/}" == "BaseQuery" ];then
 						#  Check to make sure the directory exists and the file exists for 0UTLIERS
 						if [[ -d ./data/$first_char/$second_char/$third_char/0UTLIERS && -e ./data/$first_char/$second_char/$third_char/0UTLIERS/0utliers.txt ]];then
 							rg -iN --no-filename --no-heading --color never "^$email" ./data/"$first_char"/"$second_char"/"$third_char"/0UTLIERS/0utliers.txt | while read -r Line;do
-								user_name="$(echo $Line | cut -f 1 -d ':')"
-								Password="$(echo $Line | cut -f 2- -d ':')"
+								user_name="$(echo "$Line" | cut -f 1 -d ':')"
+								Password="$(echo "$Line" | cut -f 2- -d ':')"
 								# check if the user wants the output to a file
 								if [[ "$out_to_file" == [Yy] ]];then 
 									echo  "$Line" >> ./OutputFiles/"$1"_output.txt
@@ -229,8 +216,8 @@ if [ "${PWD##*/}" == "BaseQuery" ];then
 						#  Check to see if the email is in the NOT VALID file
 						if [[ -d ./data/NOTVALID && -e ./data/NOTVALID/FAILED_TEST.txt ]];then
 							rg -iN --no-filename --no-heading --color never "^$email" ./data/NOTVALID/FAILED_TEST.txt | while read -r Line;do
-								user_name="$(echo $Line | cut -f 1 -d ':')"
-								Password="$(echo $Line | cut -f 2- -d ':')"
+								user_name="$(echo "$Line" | cut -f 1 -d ':')"
+								Password="$(echo "$Line" | cut -f 2- -d ':')"
 								# check if the user wants the output to a file
 								if [[ "$out_to_file" == [Yy] ]];then 
 									echo  "$Line" >> ./OutputFiles/"$1"_output.txt
@@ -244,13 +231,13 @@ if [ "${PWD##*/}" == "BaseQuery" ];then
 					fi
 				else
 					if [[ "$out_to_file" == [Nn] ]];then
-						printf "${GREEN}Email Address: "$email"${NC}\n"
+						printf "${GREEN}Email Address: ""$email""${NC}\n"
 					fi
 					#  The third letter directory does not exists
 					if [[ -d ./data/$first_char/$second_char/0UTLIERS && -e ./data/$first_char/$second_char/0UTLIERS/0utliers.txt ]];then
 						rg -iN --no-filename --no-heading --color never "^$email" ./data/"$first_char"/"$second_char"/0UTLIERS/0utliers.txt | while read -r Line;do
-							user_name="$(echo $Line | cut -f 1 -d ':')"
-							Password="$(echo $Line | cut -f 2- -d ':')"
+							user_name="$(echo "$Line" | cut -f 1 -d ':')"
+							Password="$(echo "$Line" | cut -f 2- -d ':')"
 							# check if the user wants the output to a file
 							if [[ "$out_to_file" == [Yy] ]];then 
 								echo  "$Line" >> ./OutputFiles/"$1"_output.txt
@@ -265,8 +252,8 @@ if [ "${PWD##*/}" == "BaseQuery" ];then
 					#  Check to see if the email is in the NOT VALID file
 					if [[ -d ./data/NOTVALID && -e ./data/NOTVALID/FAILED_TEST.txt ]];then
 						rg -iN --no-filename --no-heading --color never "^$email" ./data/NOTVALID/FAILED_TEST.txt | while read -r Line;do
-							user_name="$(echo $Line | cut -f 1 -d ':')"
-							Password="$(echo $Line | cut -f 2- -d ':')"
+							user_name="$(echo "$Line" | cut -f 1 -d ':')"
+							Password="$(echo "$Line" | cut -f 2- -d ':')"
 							# check if the user wants the output to a file
 							if [[ "$out_to_file" == [Yy] ]];then 
 								echo  "$Line" >> ./OutputFiles/"$1"_output.txt
@@ -280,13 +267,13 @@ if [ "${PWD##*/}" == "BaseQuery" ];then
 				fi
 			else
 				if [[ "$out_to_file" == [Nn] ]];then
-					printf "${GREEN}Email Address: "$email"${NC}\n"
+					printf "${GREEN}Email Address: ""$email""${NC}\n"
 				fi
 				#  The second letter directory does not exists
 				if [[ -d ./data/$first_char/0UTLIERS && -e ./data/$first_char/0UTLIERS/0utliers.txt ]];then
 					rg -iN --no-filename --no-heading --color never "^$email" ./data/"$first_char"/0UTLIERS/0utliers.txt | while read -r Line;do
-						user_name="$(echo $Line | cut -f 1 -d ':')"
-						Password="$(echo $Line | cut -f 2- -d ':')"
+						user_name="$(echo "$Line" | cut -f 1 -d ':')"
+						Password="$(echo "$Line" | cut -f 2- -d ':')"
 						# check if the user wants the output to a file
 						if [[ "$out_to_file" == [Yy] ]];then 
 							echo  "$Line" >> ./OutputFiles/"$1"_output.txt
@@ -301,8 +288,8 @@ if [ "${PWD##*/}" == "BaseQuery" ];then
 				#  Check to see if the email is in the NOT VALID file
 				if [[ -d ./data/NOTVALID && -e ./data/NOTVALID/FAILED_TEST.txt ]];then
 					rg -iN --no-filename --no-heading --color never "^$email" ./data/NOTVALID/FAILED_TEST.txt | while read -r Line;do
-						user_name="$(echo $Line | cut -f 1 -d ':')"
-						Password="$(echo $Line | cut -f 2- -d ':')"
+						user_name="$(echo "$Line" | cut -f 1 -d ':')"
+						Password="$(echo "$Line" | cut -f 2- -d ':')"
 						# check if the user wants the output to a file
 						if [[ "$out_to_file" == [Yy] ]];then 
 							echo  "$Line" >> ./OutputFiles/"$1"_output.txt
@@ -316,13 +303,13 @@ if [ "${PWD##*/}" == "BaseQuery" ];then
 			fi
 		else
 			if [[ "$out_to_file" == [Nn] ]];then
-				printf "${GREEN}Email Address: "$email"${NC}\n"
+				printf "${GREEN}Email Address: ""$email""${NC}\n"
 			fi
 			#  The first letter directory does not exists
 			if [[ -d ./data/0UTLIERS && -e ./data/0UTLIERS/0utliers.txt ]];then
 				rg -iN --no-filename --no-heading --color never "^$email" ./data/0UTLIERS/0utliers.txt | while read -r Line;do
-					user_name="$(echo $Line | cut -f 1 -d ':')"
-					Password="$(echo $Line | cut -f 2- -d ':')"
+					user_name="$(echo "$Line" | cut -f 1 -d ':')"
+					Password="$(echo "$Line" | cut -f 2- -d ':')"
 					# check if the user wants the output to a file
 					if [[ "$out_to_file" == [Yy] ]];then 
 						echo  "$Line" >> ./OutputFiles/"$1"_output.txt
@@ -337,8 +324,8 @@ if [ "${PWD##*/}" == "BaseQuery" ];then
 			#  Check to see if the email is in the NOT VALID file
 			if [[ -d ./data/NOTVALID && -e ./data/NOTVALID/FAILED_TEST.txt ]];then
 				rg -iN --no-filename --no-heading --color never "^$email" ./data/NOTVALID/FAILED_TEST.txt | while read -r Line;do
-					user_name="$(echo $Line | cut -f 1 -d ':')"
-					Password="$(echo $Line | cut -f 2- -d ':')"
+					user_name="$(echo "$Line" | cut -f 1 -d ':')"
+					Password="$(echo "$Line" | cut -f 2- -d ':')"
 					# check if the user wants the output to a file
 					if [[ "$out_to_file" == [Yy] ]];then 
 						echo  "$Line" >> ./OutputFiles/"$1"_output.txt
@@ -363,7 +350,7 @@ if [ "${PWD##*/}" == "BaseQuery" ];then
 		fi
 		# Supreses output
 		if [[ "$out_to_file" == [Nn] ]];then
-			printf "${GREEN}Email Address: "$email"${NC}\n"
+			printf "${GREEN}Email Address: ""$email""${NC}\n"
 		fi
 
 		# Checks if the email has an @ 
@@ -372,8 +359,8 @@ if [ "${PWD##*/}" == "BaseQuery" ];then
 			#  Check to see if the email is in the NOT VALID file
 			if [[ -d ./data/NOTVALID && -e ./data/NOTVALID/FAILED_TEST.txt ]];then
 				rg -iN --no-filename --no-heading --color never "^$email" ./data/NOTVALID/FAILED_TEST.txt | while read -r Line;do
-					user_name="$(echo $Line | cut -f 1 -d ':')"
-					Password="$(echo $Line | cut -f 2- -d ':')"
+					user_name="$(echo "$Line" | cut -f 1 -d ':')"
+					Password="$(echo "$Line" | cut -f 2- -d ':')"
 					# check if the user wants the output to a file
 					if [[ "$out_to_file" == [Yy] ]];then 
 						echo  "$Line" >> ./OutputFiles/"$1"_output.txt
@@ -392,8 +379,4 @@ if [ "${PWD##*/}" == "BaseQuery" ];then
 else
 	printf "${RED}ERROR: Please change directories to the BaseQuery root directory${NC}\n"
 fi
-
-
-
-
 
